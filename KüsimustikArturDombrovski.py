@@ -60,3 +60,4 @@ if __name__ == "__main__":
     kirjuta_küsimused_vastused("valed.txt", ebaõnnestunud)
 
     kuvada_nimekirjad(edukad, ebaõnnestunud)
+    

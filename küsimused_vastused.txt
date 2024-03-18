@@ -1,4 +1,8 @@
-Какое самое высокое здание в мире?: Бурдж Халифа
-Какое самое большое озеро в мире?: Каспийское море
-Сколько дней в году?: 365 (или 366 в високосный год)
-как дела 
+Mis on maailma kõrgeim hoone?: Burj Khalifa
+Mis on maailma suurim järv?: Kaspia meri
+Mitu päeva on aastas?: 365 (või liigaaastatel 366)
+kas tingimuslause on tingimuslik? Ya
+Kes kirjutas "Sõja ja rahu"? Lev Tolstoi	
+Mis on inglise tähestiku kõige levinum täht? E
+Mis on Prantsusmaa pealinna nimi? Pariis
+Kes läks esimesena kosmosesse? Juri Gagarin

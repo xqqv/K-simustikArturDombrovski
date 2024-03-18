@@ -1,63 +1,62 @@
-def loe_kusimused_vastused(failinimi):
-    kus_vas = {}
-      with open(failinimi, "r", encoding="utf-8") as fail:
+def loe_küsimused_vastused(failinimi):
+    küs_vas = {}
+    with open(failinimi, "r", encoding="utf-8") as fail:
         for line in fail:
             n = line.find(":")
-            kus_vas[line[:n].strip()] = line[n + 1:].strip()
-    return kus_vas
+            küs_vas[line[:n].strip()] = line[n + 1:].strip()
+    return küs_vas
 
-def kirjuta_kusimused_vastused(failinimi, kus_vas):
+def kirjuta_küsimused_vastused(failinimi, küs_vas):
     with open(failinimi, "w", encoding="utf-8") as fail:
-        for kus, vas in kus_vas.items():
-            fail.write(f"{kus}:{vas}\n")
+        for küs, vas in küs_vas.items():
+            fail.write(f"{küs}:{vas}\n")
 
-def esita_kusimustik(kus_vas, kusitavate_arv):
-    oiged_vastused = 0
-    kusimustik_edukad = {}
-    kusimustik_ebaonnnestunud = {}
+def esita_küsimustik(küs_vas, küsitavate_arv):
+    õiged_vastused = 0
+    küsimustik_edukad = {}
+    küsimustik_ebaõnnestunud = {}
 
-    for i in range(kusitavate_arv):
-        kus = list(kus_vas.keys())[i]
-        oodatud_vastus = kus_vas[kus]
+    for i in range(küsitavate_arv):
+        küs = list(küs_vas.keys())[i]
+        oodatud_vastus = küs_vas[küs]
 
-        vastus = input(f"{kus}\nSinu vastus: ").strip()
+        vastus = input(f"{küs}\nSinu vastus: ").strip()
 
         if vastus.lower() == oodatud_vastus.lower():
             print("Õige!\n")
-            oiged_vastused += 1
+            õiged_vastused += 1
         else:
             print(f"Vale! Õige vastus on: {oodatud_vastus}\n")
 
-        if i == kusitavate_arv - 1:
-            print("Küsimustik läbi!")
+        if i == küsitavate_arv - 1:
+            print("Viktoriin lõppenud!")
 
-    if oiged_vastused > kusitavate_arv // 2:
-        kusimustik_edukad = {"Küsitletu": oiged_vastused}
+    if õiged_vastused > küsitavate_arv // 2:
+        küsimustik_edukad["Edukalt läbitud"] = õiged_vastused
     else:
-        kusimustik_ebaonnnestunud = {"Küsitletu": oiged_vastused}
+        küsimustik_ebaõnnestunud["Edukalt läbitud"] = õiged_vastused
 
-    return kusimustik_edukad, kusimustik_ebaonnnestunud
+    return küsimustik_edukad, küsimustik_ebaõnnestunud
 
-def kuvada_nimekirjad(edukad, ebaonnnestunud):
+def kuvada_nimekirjad(edukad, ebaõnnestunud):
     if edukad:
-        print("\nEdukalt läbinud:")
-        for nimi, oiged in sorted(edukad.items()):
-            print(f"{nimi}: {oiged} õiget vastust")
-    if ebaonnnestunud:
+        print("\nEdukalt läbitud:")
+        for nimi, õiged in sorted(edukad.items()):
+            print(f"{nimi}: {õiged} õiget vastust")
+    if ebaõnnestunud:
         print("\nEbaõnnestunud:")
-        for nimi, oiged in sorted(ebaonnnestunud.items()):
-            print(f"{nimi}: {oiged} õiget vastust")
+        for nimi, õiged in sorted(ebaõnnestunud.items()):
+            print(f"{nimi}: {õiged} õiget vastust")
 
 if __name__ == "__main__":
-    failinimi = "kusimused_vastused.txt"
-    kus_vas = loe_kusimused_vastused(failinimi)
+    failinimi = "küsimused_vastused.txt"
+    küs_vas = loe_küsimused_vastused(failinimi)
 
-    kusitavate_arv = int(input("Mitu küsimust soovid esitada? "))
+    küsitavate_arv = int(input("Mitu küsimust soovid esitada? "))
 
-    edukad, ebaonnnestunud = esita_kusimustik(kus_vas, kusitavate_arv)
+    edukad, ebaõnnestunud = esita_küsimustik(küs_vas, küsitavate_arv)
 
-    kirjuta_kusimused_vastused("oiged.txt", edukad)
-    kirjuta_kusimused_vastused("valed.txt", ebaonnnestunud)
+    kirjuta_küsimused_vastused("õiged.txt", edukad)
+    kirjuta_küsimused_vastused("valed.txt", ebaõnnestunud)
 
-    kuvada_nimekirjad(edukad, ebaonnnestunud)
-
+    kuvada_nimekirjad(edukad, ebaõnnestunud)

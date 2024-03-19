@@ -1,3 +1,8 @@
+import smtplib
+import ssl
+from email.message import EmailMessage
+from email.mime.image import MIMEImage
+
 def loe_küsimused_vastused(failinimi):
     küs_vas = {}
     with open(failinimi, "r", encoding="utf-8") as fail:
@@ -48,16 +53,48 @@ def kuvada_nimekirjad(edukad, ebaõnnestunud):
         for nimi, õiged in sorted(ebaõnnestunud.items()):
             print(f"{nimi}: {õiged} õiget vastust")
 
+def saada_email():
+    smtp_server = "smtp.gmail.com"
+    port = 587
+    saatja_email = "arturdombrovski94@gmail.com"
+    parool = input("Sisestage oma parool: ")
+    saaja_email = "marina.oleinik@tthk.ee"
+
+    context = ssl.create_default_context()
+    msg = EmailMessage()
+    msg.set_content("Tere tulemast! See on e-kirja sisu.")
+    msg["Subject"] = "E-kirja teema"
+    msg["From"] = "Artur Dombrovski"
+    msg["To"] = saaja_email
+
+    with open("kartonka.jpg", "rb") as fpilt:
+        img_data = fpilt.read()
+
+    img_part = MIMEImage(img_data, name="kartonka.jpg")
+    msg.add_attachment(img_part)
+
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.starttls(context=context)
+        server.login(saatja_email, parool)
+        server.send_message(msg)
+        print("E-kiri saadetud edukalt!")
+    except Exception as e:
+        print(f"Viga e-kirja saatmisel: {e}")
+    finally:
+        server.quit()
+
 if __name__ == "__main__":
     failinimi = "küsimused_vastused.txt"
     küs_vas = loe_küsimused_vastused(failinimi)
 
-    küsitavate_arv = int(input("Mitu küsimust soovid esitada? "))
+    küsitavate_arv = int(input("Mitu küsimust soovite esitada? "))
 
     edukad, ebaõnnestunud = esita_küsimustik(küs_vas, küsitavate_arv)
 
     kirjuta_küsimused_vastused("õiged.txt", edukad)
     kirjuta_küsimused_vastused("valed.txt", ebaõnnestunud)
 
-    kuvada_nimekirjad(edukad, ebaõnnestunud)
-    
+    kuvada_nimekirjad(edukad, ebaõnnestunud) 
+
+    saada_email()

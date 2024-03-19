@@ -24,6 +24,7 @@
     <Compile Include="KüsimustikArturDombrovski.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="kartonka.jpg" />
     <Content Include="küsimused_vastused.txt." />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

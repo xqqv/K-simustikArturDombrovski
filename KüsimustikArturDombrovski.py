@@ -53,7 +53,7 @@ def kuvada_nimekirjad(edukad, ebaõnnestunud):
         for nimi, õiged in sorted(ebaõnnestunud.items()):
             print(f"{nimi}: {õiged} õiget vastust")
 
-def saada_email():
+def saada_email(points_earned):
     smtp_server = "smtp.gmail.com"
     port = 587
     saatja_email = "arturdombrovski94@gmail.com"
@@ -62,11 +62,11 @@ def saada_email():
 
     context = ssl.create_default_context()
     msg = EmailMessage()
-    msg.set_content("Tere tulemast! See on e-kirja sisu.")
-    msg["Subject"] = "E-kirja teema"
-    msg["From"] = "Artur Dombrovski"
+    msg.set_content(f"Tere! See on testi tulemused. Teie tulemus: {points_earned} punkti.")
+    msg["Subject"] = "Test"
+    msg["From"] = "Artur Dombrovski"                #rxci awqn lcxs yvzu
     msg["To"] = saaja_email
-
+    
     with open("kartonka.jpg", "rb") as fpilt:
         img_data = fpilt.read()
 
@@ -92,9 +92,9 @@ if __name__ == "__main__":
 
     edukad, ebaõnnestunud = esita_küsimustik(küs_vas, küsitavate_arv)
 
-    kirjuta_küsimused_vastused("õiged.txt", edukad)
-    kirjuta_küsimused_vastused("valed.txt", ebaõnnestunud)
+    kirjuta_küsimused_vastused("õiged1.txt", edukad)
+    kirjuta_küsimused_vastused("valed1.txt", ebaõnnestunud)
 
     kuvada_nimekirjad(edukad, ebaõnnestunud) 
 
-    saada_email()
+    saada_email(sum(edukad.values()))  
